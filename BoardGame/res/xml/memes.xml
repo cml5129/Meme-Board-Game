@@ -1,0 +1,258 @@
+<memes>
+<meme>
+    <X>2189</X>
+    <Y>1397</Y>
+    <width>444</width>
+    <height>434</height>
+    <topText>player starts first whose dice roll</topText>
+    <bottomText>is too damn high</bottomText>
+	<action>Nothing</action>
+	<special>start</special>
+</meme>
+<meme>
+    <X>1754</X>
+    <Y>1404</Y>
+    <width>404</width>
+    <height>432</height>
+    <topText>everyone else enjoys a drink</topText>
+    <bottomText>don't drink and shuffle back to start</bottomText>
+	<action>Beginning</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>1315</X>
+    <Y>1404</Y>
+    <width>409</width>
+    <height>346</height>
+    <topText>choose someone else to drink</topText>
+    <bottomText>have a drink anyway</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+</meme>
+<meme>
+    <X>891</X>
+    <Y>1404</Y>
+    <width>405</width>
+    <height>440</height>
+    <topText>anyone else not shower today?</topText>
+    <bottomText>have a drink?</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+</meme>
+<meme>
+    <X>453</X>
+    <Y>1402</Y>
+    <width>408</width>
+    <height>438</height>
+    <topText>bro, that's just how I roll</topText>
+    <bottomText>the dice for another turn</bottomText>
+	<action>AnotherTurn</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>4</X>
+    <Y>1403</Y>
+    <width>405</width>
+    <height>435</height>
+    <topText>"OMG it's my turn to drink lol xox"</topText>
+    <bottomText>all facebook friends have to drink too</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>33</X>
+    <Y>929</Y>
+    <width>406</width>
+    <height>269</height>
+    <topText>I've only just started the drinking game</topText>
+    <bottomText>now I have to drink and start again</bottomText>
+	<action>Beginning</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>484</X>
+    <Y>928</Y>
+    <width>414</width>
+    <height>304</height>
+    <topText>tell a joke</topText>
+    <bottomText>no one lags, you drink</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>910</X>
+    <Y>937</Y>
+    <width>415</width>
+    <height>313</height>
+    <topText>Need a meme for making all of the guys drink?</topText>
+    <bottomText>Why not zoidberg?</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>1358</X>
+    <Y>935</Y>
+    <width>411</width>
+    <height>440</height>
+    <topText>is it my turn?</topText>
+    <bottomText>drink and miss a go</bottomText>
+	<action>SkipTurn</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>1775</X>
+    <Y>932</Y>
+    <width>403</width>
+    <height>434</height>
+    <topText>Everyone younger than you</topText>
+    <bottomText>drinks</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>2186</X>
+    <Y>929</Y>
+    <width>452</width>
+    <height>438</height>
+    <topText>My turn to drink?</topText>
+    <bottomText>take it from someone else's glass and move them back 3 spaces</bottomText>
+	<action>PickGoBack3</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>2161</X>
+    <Y>487</Y>
+    <width>323</width>
+    <height>433</height>
+    <topText>Brethren before wenches</topText>
+    <bottomText>wenches imbibe</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>1732</X>
+    <Y>487</Y>
+    <width>409</width>
+    <height>439</height>
+    <topText>you no winning game?</topText>
+    <bottomText>drink, rolling the dice and you move back</bottomText>
+	<action>RollBack</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>1283</X>
+    <Y>487</Y>
+    <width>406</width>
+    <height>439</height>
+    <topText>wait until next person has to drink</topText>
+    <bottomText>drink in their place</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>845</X>
+    <Y>485</Y>
+    <width>407</width>
+    <height>305</height>
+    <topText>not sure if I should drink 3 drinks</topText>
+    <bottomText>or go back 3 spaces</bottomText>
+	<action>DrinkOrGoBack3</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>424</X>
+    <Y>482</Y>
+    <width>406</width>
+    <height>305</height>
+    <topText>whoever is in the lead</topText>
+    <bottomText>drink and go back to the start</bottomText>
+	<action>LeaderGoBackToStart</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>6</X>
+    <Y>463</Y>
+    <width>406</width>
+    <height>435</height>
+    <topText>if optimism is seeing someone's glass half full</topText>
+    <bottomText>is it pessimistic to ask them to half empty it?</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme><meme>
+	<X>0</X>
+	<Y>0</Y>
+	<width>340</width>
+	<height>439</height>
+	<topText>I don't always make someone drink</topText>
+	<bottomText>but when I do, they down it</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>	
+</meme>
+<meme>
+	<X>370</X><Y>0</Y>
+	<width>409</width><height>441</height>
+	<topText>What if everyone rolls the dice</topText>
+	<bottomText>And whoever gets a 6 goes back to the start</bottomText>
+	<action>Roll6</action>
+	<special>Nothing</special>
+</meme>
+<meme>
+    <X>815</X>
+    <Y>0</Y>
+    <width>322</width>
+    <height>436</height>
+    <topText>The next person who makes me drink</topText>
+    <bottomText>I will force them to finish theirs</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>1159</X>
+    <Y>0</Y>
+    <width>407</width>
+    <height>436</height>
+    <topText>My turn?</topText>
+    <bottomText>downs drink</bottomText>
+	<action>Nothing</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>1582</X>
+    <Y>0</Y>
+    <width>406</width>
+    <height>284</height>
+    <topText>one does not simply</topText>
+    <bottomText>finish the game, Drink and go back 10 spaces</bottomText>
+	<action>GoBack10</action>
+	<special>Nothing</special>
+
+</meme>
+<meme>
+    <X>2018</X>
+    <Y>0</Y>
+    <width>400</width>
+    <height>437</height>
+    <topText>I won the game</topText>
+    <bottomText>Everyone else drinks</bottomText>
+	<action>Nothing</action>
+	<special>End</special>
+
+</meme>
+</memes>
