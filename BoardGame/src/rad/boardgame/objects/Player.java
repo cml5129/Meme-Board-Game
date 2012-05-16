@@ -16,12 +16,16 @@ public class Player implements picker{
 	private Rect location;
 	private boolean skipTurn = false;
 	private Rect pickRectangle,drawPickRectangle;
+	private boolean on = true;
+	private Paint paint;
 	public Player(Bitmap[] bitmaps, int location){
 		tileLocation = location;
 		bitmap = bitmaps[bitmapLocations.PLAYER.index];
 		player = playernumber;
 		name = String.valueOf(playernumber+1);
 		playernumber++;
+		paint = new Paint();
+		paint.setColor(Color.RED);
 	}
 	public void doDraw(Canvas canvas){
 		//		Paint p = new Paint();
@@ -30,7 +34,7 @@ public class Player implements picker{
 		//p.setStyle(Paint.Style.FILL); 
 		//canvas.drawRect(new Rect(0,0,100,100),p);
 		
-		canvas.drawBitmap(bitmap, null, location, null);	
+		canvas.drawBitmap(bitmap, null, location, paint);	
 	}
 	public boolean canGo(){
 		if(skipTurn){
@@ -85,12 +89,24 @@ public class Player implements picker{
 	}
 	@Override
 	public Rect getRectangle() {		
-		return pickRectangle;
+		return on ? pickRectangle: null;
 	}
 	@Override
 	public void Draw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		canvas.drawBitmap(bitmap,null,drawPickRectangle, null);	
+		if(on){
+			canvas.drawBitmap(bitmap,null,drawPickRectangle, null);
+		}
 		
+	}
+	@Override
+	public void turnOff() {
+		// TODO Auto-generated method stub
+		on = false;
+	}
+	@Override
+	public void turnOn() {
+		// TODO Auto-generated method stub
+		on = true;
 	}
 }

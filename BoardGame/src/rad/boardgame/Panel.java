@@ -29,7 +29,7 @@ import android.view.WindowManager;
 public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	public enum GameState
 	{
-		start,settings,running,end;
+		load,loading,start,settings,running,end;
 	}
 	private static ViewThread mThread;
 	private static Context context;
@@ -38,11 +38,12 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	private static Paint mPaint = new Paint();
 	public static float points = 0;
 	private static Boolean paused = false;
-	private static GameState gameState = GameState.start;
+	private static GameState gameState = GameState.load;
 	private static float sinceEnd = 0;
 	private static GameMaster gameMaster;
 	private static Winner winner;
 	private static Menu menu;
+	private static Load load;
 	private static Settings settings;
 	private static boolean quit = false;
 	private static Bitmap[] bitmaps= new Bitmap[5];
@@ -52,41 +53,44 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	    getHolder().addCallback(this);
 	    if(mThread == null){
 		    mThread = new ViewThread(this);
-		    getImages();
 	    	ViewThread.mStartTime = System.currentTimeMillis();
 	    	WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 	    	Display display = wm.getDefaultDisplay();
-	    	
-	    	Point size = new Point();
 	    	mWidth = display.getWidth();
 	    	mHeight = display.getHeight();
-	    	menu = new Menu(bitmaps);
-	    	settings = new Settings(bitmaps);
-	    	List<memeSet> memes = new ArrayList<memeSet>();
-	    	memes.add(new memeSet(bitmaps[bitmapLocations.MEMES.index],getResources().getXml(R.xml.memes)));
-	    	gameMaster = new GameMaster(bitmaps,memes);
-	    	winner = new Winner(bitmaps);
+	    	loadingScreen();
 	    }
+	}
+	public void load(){
+
+	    getImages();	    	
+    	menu = new Menu(bitmaps);
+    	settings = new Settings(bitmaps);
+    	List<memeSet> memes = new ArrayList<memeSet>();
+    	memes.add(new memeSet(bitmaps[bitmapLocations.MEMES.index],getResources().getXml(R.xml.memes)));
+    	gameMaster = new GameMaster(bitmaps,memes);
+    	winner = new Winner(bitmaps);
+    	gameState = GameState.start;
+	}
+	public void loadingScreen(){
+		bitmaps[2] = BitmapFactory.decodeResource(getResources(), R.drawable.menu);
+		load = new Load(bitmaps);
+		
 	}
 	public void getImages()
 	{		
 		bitmaps[0] = BitmapFactory.decodeResource(getResources(), R.drawable.empty);
 		bitmaps[1] = BitmapFactory.decodeResource(getResources(), R.drawable.redditalien);
-		bitmaps[2] = BitmapFactory.decodeResource(getResources(), R.drawable.menu);
 		getMems(1,R.drawable.memes,3);
 		getMems(1,R.drawable.dice,4);
 	}
 	public void getMems(int sampleSize,int id,int index){
 		// First decode with inJustDecodeBounds=true to check dimensions
 	    final BitmapFactory.Options options = new BitmapFactory.Options();
-	    options.inJustDecodeBounds = true;
-	    BitmapFactory.decodeResource(getResources(), id);
 
 	    // Calculate inSampleSize
 	    options.inSampleSize = sampleSize;
 
-	    // Decode bitmap with inSampleSize set
-	    options.inJustDecodeBounds = false;
 	    try{
 	    	System.gc();
 	    	bitmaps[index] = BitmapFactory.decodeResource(getResources(), id, options);
@@ -98,6 +102,13 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	{
 		canvas.drawColor(Color.BLACK);
 		switch(gameState){
+		case loading:
+			load();
+			break;
+		case load:
+			load.doDraw(canvas);
+			gameState = GameState.loading;
+			break;
 		case start:
 			menu.doDraw(canvas);
 			break;
@@ -152,13 +163,12 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	{
 		switch(gameState)
 		{
-		case start:
-		case end:
 		case running:
 			if(gameMaster.isWinner() != null){
 				winner.setName(gameMaster.isWinner());
 				end();
 			}
+			gameMaster.animate(elapsedTime);
 		}
 	}
 	@Override
@@ -193,7 +203,7 @@ public class Panel extends SurfaceView implements SurfaceHolder.Callback{
 	public void onWindowFocusChanged(boolean hasWindowFocus) {
 		// TODO Auto-generated method stub
 		//add pause timer
-		gameState = GameState.start;
+		//gameState = GameState.start;
 		super.onWindowFocusChanged(hasWindowFocus);
 	}
 	public static void end()

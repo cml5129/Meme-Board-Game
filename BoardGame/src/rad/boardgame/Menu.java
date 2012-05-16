@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 
 public class Menu {
 
+	
 	private Bitmap bitmap;
 	private Rect screen,start,settings,quit,text;
 	private Rect startScreen,settingsScreen,quitScreen,textScreen;
@@ -60,5 +61,4 @@ public class Menu {
 	public void setMenuOption(MenuOptions menuOption) {
 		this.menuOption = menuOption;
 	}
-	
 }

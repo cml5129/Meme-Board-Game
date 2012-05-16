@@ -16,6 +16,7 @@ public class Dice {
 	private Paint paint;
 	private Boolean rolled;
 	private String name;
+	private Rect board;
 	private Rect[] playerLocations = new Rect[4];
 	private Rect[] locations = new Rect[6];
 	public Dice(Bitmap[] bitmaps){
@@ -29,10 +30,14 @@ public class Dice {
 		for(int i = 0; i < 4;i++){
 			playerLocations[i] = new Rect((int)Panel.mWidth-80,50+75*i,(int)Panel.mWidth-40,50+50*(i+1)+25*i);
 		}
+		board = new Rect((int)Panel.mWidth-65,100,(int)Panel.mWidth-15,150);
 	}
 	public void doDraw(Canvas canvas){
 		canvas.drawBitmap(bitmap,locations[roll-1],playerLocations[0],null);
 		canvas.drawText("Player "+name, Panel.mWidth-100, 35, paint);
+	}
+	public void doDrawBoard(Canvas canvas){
+		canvas.drawBitmap(bitmap,locations[roll-1],board,null);
 	}
 	public void doDraw(Canvas canvas,int player){
 		canvas.drawBitmap(bitmap,locations[roll-1],playerLocations[player],null);

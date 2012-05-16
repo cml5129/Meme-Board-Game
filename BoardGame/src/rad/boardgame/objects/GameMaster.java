@@ -10,28 +10,31 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class GameMaster {
 	enum Mode{
-		start,normal,zoom,pick,roll6,rollBack,pickPlayer
+		start,normal,roll,move,zoom,pick,roll6,rollBack,pickPlayer
 	}
 	private List<Player> players;
 	private Board board;
-	private int numPlayers = 4;
+	private int numPlayers = 4,movesLeft,moveDir = -1;
 	private Rect screen,boardSize,area;
 	private Canvas overlayCanvas;
 	private int playersTurn;
 	private int startdrawDice,endDrawDice;
-	private boolean anotherTurn = false;
+	private boolean anotherTurn = false,winningTouch;
 	private Player winner,rollBack;
+	private final double TIME = 500;
+	private double wait = 0;
 	
 	private Dice dice;
 	private List<Dice> di;
 	Bitmap bmOverlay;
 	private Mode mode;
 	private Pick pick,drink;
-	private Paint paint;
+	private Paint paint,red;
 	public GameMaster(Bitmap[] bitmaps,List<memeSet> files){
 		board = new Board(bitmaps,files);
 		players = new ArrayList<Player>();
@@ -41,18 +44,22 @@ public class GameMaster {
 			di.add(new Dice(bitmaps));
 		}
 		screen= new Rect(0,0,(int)Panel.mWidth,(int)Panel.mHeight);
-		boardSize = new Rect(0,0,2771,1959);
+		boardSize = new Rect(0,0,(int)Panel.mWidth-70,(int)Panel.mHeight);		
 		bmOverlay = Bitmap.createBitmap(screen.width(),screen.height(),bitmaps[bitmapLocations.MEMES.index].getConfig());
-        overlayCanvas = new Canvas(bmOverlay);
+		area = new Rect((int)Panel.mWidth-70,0,(int)Panel.mWidth,(int)Panel.mHeight);
+		overlayCanvas = new Canvas(bmOverlay);
 		for(Player player:players){
 			board.setPlayer(player);
 		}		
 		winner = null;
 		mode = Mode.start;
 		dice = new Dice(bitmaps);
+		red = new Paint();
+		red.setColor(Color.RED);
+		red.setTextSize(15);
+		
 		paint = new Paint();
 		paint.setColor(Color.WHITE);
-		paint.setTextSize(60);
 		picker[][] picker = new picker[2][2];
 		picker[0][0] = players.get(0);
 		picker[0][1] = players.get(1);
@@ -66,19 +73,27 @@ public class GameMaster {
 		drinks[1][0] = new Drink(bitmaps,"Go Back!",DrinkOrGoBack.GoBack);
 		drink = new Pick(2,1,screen,drinks);
 		
+		winningTouch = false;
+		
 		
 	}
 	public void doDraw(Canvas canvas){
 		canvas.drawColor(Color.BLACK);
 		switch(mode){
+		case roll:
+		case move:
 		case normal:
 			board.doDraw(overlayCanvas, screen);
 			for(int i = 0; i< numPlayers;i++){
 				players.get(i).doDraw(overlayCanvas);
 			}		
-			area = screen;
-			overlayCanvas.drawText("Player "+players.get(playersTurn).getName()+"'s Turn", 150, 100, paint);
-			canvas.drawBitmap(bmOverlay,screen,area,null);
+			canvas.drawRect(area, paint);
+			canvas.drawText("Player "+players.get(playersTurn).getName()+"'s", (int)Panel.mWidth-65, 40, red);
+			canvas.drawText("Turn", (int)Panel.mWidth-65, 62, red);
+			canvas.drawBitmap(bmOverlay,screen,boardSize,null);
+			if(mode == Mode.roll || mode == Mode.move){
+				dice.doDrawBoard(canvas);
+			}
 			break;
 		case rollBack:			
 		case zoom:
@@ -109,15 +124,41 @@ public class GameMaster {
 			break;			
 	}
 	}
+	public void animate(long elapsedTime) 
+	{
+
+		switch(mode){
+		case move:
+			wait += elapsedTime;
+			if(wait > TIME){
+				movesLeft--;
+				Log.d("rad", "movesLeft for player "+players.get(playersTurn).getPlayerNum()+" is "+movesLeft);
+				if(movesLeft < -1){
+					mode = Mode.zoom;
+				}
+				else if(movesLeft < 0){
+					
+				}
+				else{
+					movePlayer();	
+				}
+				wait = 0;
+			}
+		}
+	}
 	public void onTouch(MotionEvent event){
 		switch(mode){
 		case normal:
 			Roll();
-			mode = Mode.zoom;
 			break;		
 		case zoom:
 			mode = Mode.normal;
 			unzoom();
+			if(winner!= null){
+				winningTouch = true;
+			}
+			break;
+		case roll:
 			break;
 		case rollBack:
 			dice.roll();
@@ -132,6 +173,13 @@ public class GameMaster {
 			}
 			else{
 				setStartingPlayer();
+				for(int i = 0; i < 4; i++){
+					if( i < numPlayers){
+						players.get(i).turnOn();
+					}else{
+						players.get(i).turnOff();
+					}
+				}
 				mode = Mode.normal;
 			}
 			break;
@@ -178,7 +226,7 @@ public class GameMaster {
 		dice.roll();
 		dice.setName(players.get(playersTurn).getName());
 		Roll(dice.getRoll());
-		mode = Mode.zoom;
+		//mode = Mode.zoom;
 	}
 	public void unzoom(){
 		mode = Mode.normal;
@@ -196,7 +244,7 @@ public class GameMaster {
 		playersTurn = start;
 	}
 	public String isWinner(){
-		return winner== null?null:winner.getName();
+		return !winningTouch?null:winner.getName();
 	}
 	public void Roll(int rolled){
 		Player player = players.get(playersTurn);
@@ -222,13 +270,22 @@ public class GameMaster {
 		}
 	}
 	public void movePlayer(Player p,int numTiles){
-		int location = p.getTileLocation();
-		if(location+numTiles >= board.getNumTiles()){
-			winner = p;
-			p.setTileLocation(board.getNumTiles()-1);
+		Log.d("rad", "Move player "+p.getPlayerNum()+" "+numTiles);
+		movesLeft = Math.abs(numTiles);
+		moveDir = numTiles > 0 ? -1: 1;
+		mode = Mode.move;
+	}
+	public void movePlayer(){
+		int location = players.get(playersTurn).getTileLocation();
+		Log.d("rad", "Move player "+players.get(playersTurn).getPlayerNum()+" "+(location -moveDir));
+		int newLocation = location -moveDir;
+		if(newLocation >= board.getNumTiles()){
+			winner = players.get(playersTurn);
+			players.get(playersTurn).setTileLocation(board.getNumTiles()-1);
 			return;
 		}
-		p.setTileLocation(location+numTiles);
+		players.get(playersTurn).setTileLocation(newLocation);
+		board.setPlayer(players.get(playersTurn));
 	}
 	public void doAction(Player p){
 		switch(board.performAction(p)){
@@ -294,6 +351,7 @@ public class GameMaster {
 			player.reset();
 		}
 		winner = null;
+		winningTouch = false;
 	}
 	public void shuffle(){
 		board.shuffle();

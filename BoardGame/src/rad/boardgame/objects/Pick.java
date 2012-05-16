@@ -28,7 +28,8 @@ public class Pick {
 	public void onTouch(MotionEvent event){
 		for(int i = 0; i < objects.length;i++){
 			for(int j = 0; j < objects[i].length;j++){
-				if(objects[i][j].getRectangle().contains((int)Math.floor(event.getX()), (int)Math.floor(event.getY()))){
+				Rect rect = objects[i][j].getRectangle();
+				if(rect != null &&rect.contains((int)Math.floor(event.getX()), (int)Math.floor(event.getY()))){
 					picker = objects[i][j]; 
 					return;
 				}
@@ -40,6 +41,12 @@ public class Pick {
 	}
 	public void setPicker(picker picker) {
 		this.picker = picker;
+	}
+	public picker[][] getObjects() {
+		return objects;
+	}
+	public void setObjects(picker[][] objects) {
+		this.objects = objects;
 	}
 	
 

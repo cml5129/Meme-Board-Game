@@ -7,5 +7,6 @@ public interface picker {
 	void setRectangle(Rect rect);
 	Rect getRectangle();
 	void Draw(Canvas canvas);
-
+	void turnOff();
+	void turnOn();
 }

@@ -12,6 +12,7 @@ public class Drink implements picker {
 	Rect rect,draw;
 	private String message;
 	private Object object;
+	private boolean on = true;
 	public Drink(Bitmap[] bitmaps,String message,Object object){
 		paint = new Paint();
 		paint.setColor(Color.RED);
@@ -44,7 +45,17 @@ public class Drink implements picker {
 	public void setObject(Object object) {
 		this.object = object;
 	}
-	
+
+	@Override
+	public void turnOff() {
+		// TODO Auto-generated method stub
+		on = false;
+	}
+	@Override
+	public void turnOn() {
+		// TODO Auto-generated method stub
+		on = true;
+	}
 	
 
 }
